@@ -1,0 +1,24 @@
+.white-form{
+    -fx-background-color:#fff;
+}
+
+.other-form{
+    -fx-background-color: linear-gradient(to bottom right, #9e20a0,#5a3375);
+    -fx-text-fill:#fff;
+}
+
+.create-btn{
+    -fx-background-color:transparent;
+    -fx-border-color:#fff;
+    -fx-border-width:1px;
+    -fx-text-fill:#fff;
+
+}
+
+.create-btn:hover{
+    -fx-background-color: #9e20a0;
+}
+
+.cursor-hand{
+    -fx-cursor:hand;
+}
