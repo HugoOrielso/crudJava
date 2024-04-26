@@ -3,6 +3,7 @@ package com.crud.Inicio;
 import com.crud.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -16,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import static com.crud.Utils.Hooks.createStage;
+import static com.crud.Utils.Hooks.hideStage;
 
 public class CrudController implements Initializable {
 
@@ -33,12 +37,14 @@ public class CrudController implements Initializable {
     public TableColumn<WorkerData, String> col_year;
     public TableColumn<WorkerData, String> col_seccion;
     public TableColumn<WorkerData, String> col_genero;
+    public Button btn_reportes;
     private Connection connection;
     private PreparedStatement preparedStatement;
     private Statement statement;
     private ResultSet resultSet;
     private Alert alert;
     private String[] listTiposDeTrabajo = {"Programador", "Cocinero", "Estilista"};
+
     public void trabajadoresTipos(){
         List<String> tList = new ArrayList<>();
 
@@ -88,11 +94,30 @@ public class CrudController implements Initializable {
         col_genero.setCellValueFactory(new PropertyValueFactory<>("genero"));
         crud_table.setItems(allDataWorker);
     }
+
+    public void checkId(String id){
+        if (id == null || id.isEmpty()){
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("El id no puede estar vacio");
+            alert.showAndWait();
+            return;
+        }
+
+    }
+
+    public void toReportes(){
+        hideStage(btn_reportes);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Inicio/Reportes.fxml"));
+        createStage(loader);
+    }
+
     public void workerSelectData(){
         WorkerData wData = crud_table.getSelectionModel().getSelectedItem();
-
+        System.out.println(wData);
         if (wData == null) {
-            return; // No item selected, so return
+            return;
         }
         int num = crud_table.getSelectionModel().getSelectedIndex();
         if((num - 1 ) < 1){
@@ -100,7 +125,10 @@ public class CrudController implements Initializable {
         }
         numero_worker.setText(String.valueOf(wData.getNumberWorker()));
         name_worker.setText(wData.getNombreCompleto());
+        seccion_worker.setValue(wData.getSeccion());
+        genero_worker.setValue(wData.getGenero());
     }
+
     public void workerAddBtn(){
         String insertDb = "INSERT INTO trabajadores (numero,nombre_completo,seccion,genero) VALUES (?,?,?,?);";
         connection = Database.connectionDB();
@@ -142,16 +170,17 @@ public class CrudController implements Initializable {
     }
 
     public void actualizarTrabajador(){
+        if (numero_worker.getText().isEmpty() || name_worker.getText().isEmpty() || seccion_worker.getSelectionModel().getSelectedItem() == null || genero_worker.getSelectionModel().getSelectedItem() == null) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Completa todos los campos.");
+            alert.showAndWait();
+            return;
+        }
         connection = Database.connectionDB();
         try {
-            if(numero_worker.getText().isEmpty() ){
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Completa todos los campos.");
-                alert.showAndWait();
 
-            }else{
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Mensaje de confirmación");
                 alert.setHeaderText(null);
@@ -175,7 +204,6 @@ public class CrudController implements Initializable {
                     alert.setContentText("cambio cancelados");
                     alert.showAndWait();
                 }
-            }
         }catch (Exception e){e.printStackTrace();}
     }
 
@@ -234,5 +262,7 @@ public class CrudController implements Initializable {
         btn_actualizar.setOnAction(event -> actualizarTrabajador());
         btn_agregar.setOnAction(event -> workerAddBtn());
         btn_eliminar.setOnAction(event -> eliminarTrabajador());
+        btn_limpiar.setOnAction(event -> limpiarBtn());
+        btn_reportes.setOnAction(event -> toReportes());
     }
 }

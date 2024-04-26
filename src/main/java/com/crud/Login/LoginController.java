@@ -1,4 +1,4 @@
-package com.crud.Inicio;
+package com.crud.Login;
 
 import com.crud.Database;
 import javafx.event.ActionEvent;
@@ -12,13 +12,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.PrimitiveIterator;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -38,9 +38,8 @@ public class LoginController implements Initializable {
     }
 
     private void loginAccount(){
-        String consulta = "SELECT nombre, password FROM usuarios WHERE nombre = ? AND password = ?;";
+        String consulta = "SELECT nombre, password, id FROM usuarios WHERE nombre = ? AND password = ?;";
         connection = Database.connectionDB();
-
         try {
             Alert alert;
             if(lo_nombre.getText().isEmpty() || lo_password.getText().isEmpty()){
@@ -53,7 +52,6 @@ public class LoginController implements Initializable {
                 preparedStatement = connection.prepareStatement(consulta);
                 preparedStatement.setString(1, lo_nombre.getText());
                 preparedStatement.setString(2, lo_password.getText());
-
                 resultSet = preparedStatement.executeQuery();
 
                 if(resultSet.next()){
@@ -62,6 +60,8 @@ public class LoginController implements Initializable {
                     alert.setHeaderText(null);
                     alert.setContentText("Login exitoso");
                     alert.showAndWait();
+                    int id = resultSet.getInt("id");
+                    verificarExistenciaEnAuditoria(id);
                     lo_btn_login.getScene().getWindow().hide();
                     Parent root = FXMLLoader.load(getClass().getResource("/Fxml/Inicio/Crud.fxml"));
                     Stage stageCrud = new Stage();
@@ -77,7 +77,6 @@ public class LoginController implements Initializable {
                     limpiarFormulario();
                 }
             }
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -87,6 +86,43 @@ public class LoginController implements Initializable {
         lo_password.clear();
         lo_nombre.clear();
     }
+
+    public void verificarExistenciaEnAuditoria(int id){
+        String consulta = "SELECT * FROM auditoria_login WHERE id  = ?;";
+        String localDate = LocalDate.now().toString();
+
+        try {
+            preparedStatement = connection.prepareStatement(consulta);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if(!resultSet.next()){
+                String insertData = "INSERT INTO auditoria_login (id, cantidad) VALUES (?,?);";
+                preparedStatement = connection.prepareStatement(insertData);
+                preparedStatement.setInt(1, id);
+                preparedStatement.setInt(2, 1);
+                preparedStatement.executeUpdate();
+                return ;
+            }
+            String fechaDb = resultSet.getDate("fecha").toString();
+            if(fechaDb.equals(localDate)){
+                int cantidadActual = resultSet.getInt("cantidad");
+                cantidadActual = cantidadActual + 1;
+                String actualizarCantidad = "UPDATE auditoria_login SET cantidad = ? WHERE id = ? && fecha = ?;";
+                preparedStatement = connection.prepareStatement(actualizarCantidad);
+                preparedStatement.setInt(1, cantidadActual);
+                preparedStatement.setInt(2, id);
+                preparedStatement.setDate(3, Date.valueOf((fechaDb)));
+                preparedStatement.executeUpdate();
+                return;
+            }
+            String nuevoRegistro = "INSERT INTO auditoria_login (id, cantidad) VALUES (?,?);";
+            preparedStatement = connection.prepareStatement(nuevoRegistro);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(2, 1);
+            preparedStatement.executeUpdate();
+        }catch (Exception e) { e.printStackTrace(); }
+    }
+
     public void toRegister(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/Fxml/Inicio/Registro.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();

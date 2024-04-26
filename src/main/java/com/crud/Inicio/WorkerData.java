@@ -22,11 +22,9 @@ public class WorkerData {
     public String getNombreCompleto() {
         return nombreCompleto;
     }
-
     public String getFecha() {
         return fecha;
     }
-
     public String getSeccion() {
         return seccion;
     }

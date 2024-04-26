@@ -1,4 +1,4 @@
-package com.crud.Inicio;
+package com.crud.Register;
 
 import com.crud.Database;
 import javafx.event.ActionEvent;

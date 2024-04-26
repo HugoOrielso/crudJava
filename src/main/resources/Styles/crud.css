@@ -47,3 +47,26 @@
     -fx-text-fill: #fff;
     -fx-font-family: arial;
 }
+
+.btn-excel{
+    -fx-background-color: linear-gradient(to bottom right, #338e30, #289d4d);
+    -fx-text-fill:#fff;
+    -fx-font-size:14px;
+    -fx-cursor:hand;
+}
+
+.btn-excel:hover{
+    -fx-background-color: linear-gradient(to bottom right, #5fa54b, #338e30);
+}
+
+
+.btn-pdf{
+    -fx-background-color: linear-gradient(to bottom right, #c53636, #751010);
+    -fx-text-fill:#fff;
+    -fx-font-size:14px;
+    -fx-cursor:hand;
+}
+
+.btn-pdf:hover{
+    -fx-background-color: linear-gradient(to bottom right, #ac2f5b, #a53232);
+}

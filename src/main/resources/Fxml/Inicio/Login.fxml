@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="399.0" prefWidth="600.0" stylesheets="@../../Styles/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.crud.Inicio.LoginController">
+<BorderPane prefHeight="399.0" prefWidth="600.0" stylesheets="@../../Styles/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.crud.Login.LoginController">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="300.0" styleClass="other-form" BorderPane.alignment="CENTER">
          <Label layoutX="74.0" layoutY="147.0" text="Crud" textFill="WHITE">
