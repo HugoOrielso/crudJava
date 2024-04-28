@@ -14,12 +14,12 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@../../Styles/crud.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.crud.Reportes.ReportesController">
    <children>
-      <Label layoutX="47.0" layoutY="14.0" prefHeight="54.0" prefWidth="432.0" text="Reportes de conexiones diarios" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="521.8000000000001" AnchorPane.topAnchor="14.0">
+      <Label layoutX="13.0" layoutY="14.0" prefHeight="54.0" prefWidth="432.0" text="Reportes de conexiones diarios" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="555.8000000000001" AnchorPane.topAnchor="14.0">
          <font>
-            <Font size="30.0" />
+            <Font size="24.0" />
          </font>
       </Label>
-      <TableView fx:id="tableReportes" layoutX="13.0" layoutY="78.0" prefHeight="510.0" prefWidth="501.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="486.0" AnchorPane.topAnchor="78.0">
+      <TableView fx:id="tableReportes" layoutX="13.0" layoutY="78.0" prefHeight="510.0" prefWidth="466.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="522.0" AnchorPane.topAnchor="78.0">
         <columns>
           <TableColumn fx:id="col_re_nombre" prefWidth="221.59996962547302" text="Nombre" />
             <TableColumn fx:id="col_re_fecha" prefWidth="140.00003051757812" text="Fecha" />
@@ -29,24 +29,24 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <AnchorPane layoutX="538.0" layoutY="14.4" prefHeight="578.0" prefWidth="466.0" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="14.0">
+      <AnchorPane layoutX="538.0" layoutY="14.4" prefHeight="578.0" prefWidth="502.0" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="14.0">
          <children>
-            <BarChart layoutX="2.0" layoutY="60.0" prefHeight="446.0" prefWidth="439.0" AnchorPane.bottomAnchor="71.20000000000005" AnchorPane.leftAnchor="2.3999999999999773" AnchorPane.rightAnchor="25.19999999999999" AnchorPane.topAnchor="60.00000000000006">
+            <BarChart fx:id="chartDataTable" layoutX="2.0" layoutY="49.0" prefHeight="446.0" prefWidth="439.0" title="Top" AnchorPane.bottomAnchor="82.19999999999999" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="25.19999999999999" AnchorPane.topAnchor="49.0">
               <xAxis>
-                <CategoryAxis side="BOTTOM" />
+                <CategoryAxis label="Personas" side="BOTTOM" tickLabelFill="RED" />
               </xAxis>
               <yAxis>
-                <NumberAxis side="LEFT" />
+                <NumberAxis label="Conexiones" prefHeight="406.0" prefWidth="46.0" side="LEFT" tickLabelFill="RED" />
               </yAxis>
             </BarChart>
-            <Button fx:id="brn_excel" layoutX="160.0" layoutY="537.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="138.0" styleClass="btn-excel" text="Generar Excel" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="169.0">
+            <Button fx:id="btn_excel" layoutX="160.0" layoutY="529.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="138.0" styleClass="btn-excel" text="Generar Excel" AnchorPane.bottomAnchor="4.600000000000023" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="168.8">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="ARCHIVE" size="2EM" />
                </graphic>
                <font>
                   <Font size="14.0" />
                </font></Button>
-            <Button fx:id="btn_volver" layoutX="314.0" layoutY="536.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="122.0" styleClass="btn" text="Volver" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="14.0">
+            <Button fx:id="btn_volver" layoutX="365.0" layoutY="528.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="122.0" styleClass="btn" text="Volver" AnchorPane.bottomAnchor="5.600000000000023" AnchorPane.rightAnchor="15.0">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="2em">
                      <font>
@@ -54,20 +54,20 @@
                      </font>
                   </FontAwesomeIconView>
                </graphic></Button>
-            <Button fx:id="btn_pdf" layoutX="14.0" layoutY="537.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="122.0" styleClass="btn-pdf" text="Generar Pdf" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="14.0">
+            <Button fx:id="btn_pdf" layoutX="14.0" layoutY="529.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="122.0" styleClass="btn-pdf" text="Generar Pdf" AnchorPane.bottomAnchor="4.600000000000023" AnchorPane.leftAnchor="14.0">
                <graphic>
                   <FontAwesomeIconView fill="WHITE" glyphName="BOOK" size="2em" text="" />
                </graphic></Button>
-            <Label layoutX="14.0" layoutY="14.0" text="Top 5 personas con más conexiones">
+            <Label layoutX="14.0" layoutY="13.0" text="Top 5 personas con más conexiones">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Separator layoutX="11.0" layoutY="505.0" prefHeight="6.0" prefWidth="439.0" AnchorPane.bottomAnchor="66.20000000000002" />
-            <Separator layoutX="-1.0" layoutY="3.0" orientation="VERTICAL" prefHeight="568.0" prefWidth="5.0" AnchorPane.bottomAnchor="6.600000000000023" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="460.8" AnchorPane.topAnchor="3.2000000000000455" />
+            <Separator layoutX="13.0" layoutY="514.0" prefHeight="2.0" prefWidth="475.0" AnchorPane.bottomAnchor="60.39999999999998" />
+            <Separator layoutX="-19.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="568.0" prefWidth="5.0" AnchorPane.bottomAnchor="10.599999999999909" AnchorPane.leftAnchor="-19.0" AnchorPane.rightAnchor="478.99999999999994" AnchorPane.topAnchor="-1.0" />
             <FontAwesomeIconView fill="#1e00ff" glyphName="USERS" layoutX="422.0" layoutY="44.0" size="3EM" />
          </children>
       </AnchorPane>
-      <FontAwesomeIconView fill="#1600ff" glyphName="DATABASE" layoutX="469.0" layoutY="54.0" size="3em" AnchorPane.leftAnchor="469.0" AnchorPane.rightAnchor="500.34285659790044" AnchorPane.topAnchor="23.14285659790039" />
+      <FontAwesomeIconView fill="#1600ff" glyphName="DATABASE" layoutX="374.0" layoutY="54.0" size="3em" AnchorPane.leftAnchor="374.0" AnchorPane.rightAnchor="595.1428565979004" AnchorPane.topAnchor="23.14285659790039" />
    </children>
 </AnchorPane>

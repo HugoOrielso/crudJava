@@ -3,7 +3,6 @@ package com.crud.Utils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Hooks {
@@ -20,7 +19,6 @@ public class Hooks {
         stage.setTitle("Crud Java");
         stage.show();
     }
-
     public static void hideStage(Button btn){
         btn.getScene().getWindow().hide();
     }

@@ -11,12 +11,15 @@ public class LoginData {
     public String nombre;
     @Getter
     public Date fecha;
+    @Getter
+    public Integer cantidad;
 
 
-    public LoginData(Integer id, String nombre, Date fecha) {
+    public LoginData(Integer id, String nombre, Date fecha, Integer cantidad) {
         this.id = id;
         this.nombre = nombre;
         this.fecha = fecha;
+        this.cantidad = cantidad;
     }
 
 }

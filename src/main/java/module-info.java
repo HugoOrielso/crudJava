@@ -4,6 +4,8 @@ module com.crud {
     requires de.jensd.fx.glyphs.fontawesome;
     requires java.sql;
     requires lombok;
+    requires org.apache.pdfbox;
+    requires org.apache.poi.ooxml;
 
     opens com.crud to javafx.fxml;
     exports com.crud;

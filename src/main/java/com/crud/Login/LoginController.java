@@ -21,6 +21,9 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import static com.crud.Utils.Hooks.createStage;
+import static com.crud.Utils.Hooks.hideStage;
+
 public class LoginController implements Initializable {
 
     public Button to_login_form;
@@ -42,41 +45,40 @@ public class LoginController implements Initializable {
         connection = Database.connectionDB();
         try {
             Alert alert;
-            if(lo_nombre.getText().isEmpty() || lo_password.getText().isEmpty()){
+            if(lo_nombre.getText().isEmpty() || lo_password.getText().isEmpty()) {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
                 alert.setContentText("Llena todos los campos.");
                 alert.showAndWait();
-            }else{
-                preparedStatement = connection.prepareStatement(consulta);
-                preparedStatement.setString(1, lo_nombre.getText());
-                preparedStatement.setString(2, lo_password.getText());
-                resultSet = preparedStatement.executeQuery();
-
-                if(resultSet.next()){
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Información");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Login exitoso");
-                    alert.showAndWait();
-                    int id = resultSet.getInt("id");
-                    verificarExistenciaEnAuditoria(id);
-                    lo_btn_login.getScene().getWindow().hide();
-                    Parent root = FXMLLoader.load(getClass().getResource("/Fxml/Inicio/Crud.fxml"));
-                    Stage stageCrud = new Stage();
-                    Scene sceneCrud = new Scene(root);
-                    stageCrud.setScene(sceneCrud);
-                    stageCrud.show();
-                }else{
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Credenciales erróneas");
-                    alert.showAndWait();
-                    limpiarFormulario();
-                }
+                return;
             }
+            preparedStatement = connection.prepareStatement(consulta);
+            preparedStatement.setString(1, lo_nombre.getText());
+            preparedStatement.setString(2, lo_password.getText());
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Información");
+                alert.setHeaderText(null);
+                alert.setContentText("Login exitoso");
+                alert.showAndWait();
+                int id = resultSet.getInt("id");
+                verificarExistenciaEnAuditoria(id);
+                lo_btn_login.getScene().getWindow().hide();
+                Parent root = FXMLLoader.load(getClass().getResource("/Fxml/Inicio/Crud.fxml"));
+                Stage stageCrud = new Stage();
+                Scene sceneCrud = new Scene(root);
+                stageCrud.setScene(sceneCrud);
+                stageCrud.show();
+                return;
+            }
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Credenciales erróneas");
+            alert.showAndWait();
+            limpiarFormulario();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -88,12 +90,13 @@ public class LoginController implements Initializable {
     }
 
     public void verificarExistenciaEnAuditoria(int id){
-        String consulta = "SELECT * FROM auditoria_login WHERE id  = ?;";
+        String consulta = "SELECT * FROM auditoria_login WHERE id  = ? && fecha = ?;";
         String localDate = LocalDate.now().toString();
 
         try {
             preparedStatement = connection.prepareStatement(consulta);
             preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, localDate);
             resultSet = preparedStatement.executeQuery();
             if(!resultSet.next()){
                 String insertData = "INSERT INTO auditoria_login (id, cantidad) VALUES (?,?);";
@@ -123,11 +126,9 @@ public class LoginController implements Initializable {
         }catch (Exception e) { e.printStackTrace(); }
     }
 
-    public void toRegister(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/Fxml/Inicio/Registro.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void toRegister() throws IOException {
+        FXMLLoader loader = new  FXMLLoader(getClass().getResource("/Fxml/Inicio/Registro.fxml"));
+        hideStage(to_login_form);
+        createStage(loader);
     }
 }
