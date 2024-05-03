@@ -15,8 +15,6 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setTitle("Crud java");
         stage.setResizable(false);
-        //stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Imagenes/logo.jpg"))));
         stage.show();
     }
-
 }

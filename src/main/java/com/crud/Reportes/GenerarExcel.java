@@ -8,7 +8,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -22,7 +21,6 @@ public class GenerarExcel {
         try (Workbook workbook = new XSSFWorkbook()) {
             estadisticas = getDataReportes();
             Sheet sheet = workbook.createSheet("Sheet1");
-
             Row headerRow = sheet.createRow(0);
             Cell headerCell = headerRow.createCell(0);
             headerCell.setCellValue(titulos[0]);
@@ -30,7 +28,7 @@ public class GenerarExcel {
             headerCell.setCellValue(titulos[1]);
             headerCell = headerRow.createCell(2);
             headerCell.setCellValue(titulos[2]);
-            int rowIndex = 1; // Start writing data from the second row (after header)
+            int rowIndex = 1;
             for (LoginData loginData : estadisticas) {
                 Row dataRow = sheet.createRow(rowIndex);
                 Cell dataCell = dataRow.createCell(0);

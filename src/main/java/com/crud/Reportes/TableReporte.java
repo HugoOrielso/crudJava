@@ -7,6 +7,7 @@ public class TableReporte {
     public String nombre;
     @Getter
     public Integer conexiones;
+
     public TableReporte(String nombre, Integer conexiones) {
         this.nombre = nombre;
         this.conexiones = conexiones;

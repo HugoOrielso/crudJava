@@ -92,7 +92,6 @@ public class LoginController implements Initializable {
     public void verificarExistenciaEnAuditoria(int id){
         String consulta = "SELECT * FROM auditoria_login WHERE id  = ? && fecha = ?;";
         String localDate = LocalDate.now().toString();
-
         try {
             preparedStatement = connection.prepareStatement(consulta);
             preparedStatement.setInt(1, id);

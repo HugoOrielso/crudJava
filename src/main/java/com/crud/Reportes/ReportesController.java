@@ -26,7 +26,6 @@ import static com.crud.Utils.Hooks.createStage;
 import static com.crud.Utils.Hooks.hideStage;
 
 public class ReportesController implements Initializable {
-
     public TableView tableReportes;
     public TableColumn col_re_fecha;
     public TableColumn col_re_conexiones;
@@ -38,7 +37,6 @@ public class ReportesController implements Initializable {
     Connection connection;
     PreparedStatement preparedStatement;
     ResultSet resultSet;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         btn_volver.setOnAction(event -> toInicio());
@@ -90,5 +88,4 @@ public class ReportesController implements Initializable {
         }
         chartDataTable.getData().add(series);
     }
-
 }

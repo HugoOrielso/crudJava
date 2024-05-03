@@ -6,9 +6,9 @@ public class WorkerData {
     private Integer numberWorker;
     private String nombreCompleto;
     private String seccion;
-
     private String fecha;
     private String genero;
+
     public WorkerData(Integer numberWorker, String nombreCompleto, String seccion, String fecha, String genero) {
         this.numberWorker = numberWorker;
         this.nombreCompleto = nombreCompleto;
@@ -16,6 +16,7 @@ public class WorkerData {
         this.fecha = fecha;
         this.genero = genero;
     }
+
     public Integer getNumberWorker() {
         return numberWorker;
     }

@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class Hooks {
+
     public static void createStage(FXMLLoader loader) {
         Scene scene = null;
         try {
@@ -19,6 +20,7 @@ public class Hooks {
         stage.setTitle("Crud Java");
         stage.show();
     }
+
     public static void hideStage(Button btn){
         btn.getScene().getWindow().hide();
     }
